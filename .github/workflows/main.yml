@@ -1,23 +1,26 @@
 name: Build APK
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.x'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0'
 
-    - run: flutter pub get
-    - run: dart run build_runner build --delete-conflicting-outputs
-    - run: flutter build apk --debug
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - run: flutter build apk --debug
 
-    - uses: actions/upload-artifact@v3
-      with:
-        name: apk
-        path: build/app/outputs/flutter-apk/app-debug.apk
+      - uses: actions/upload-artifact@v3
+        with:
+          name: apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
